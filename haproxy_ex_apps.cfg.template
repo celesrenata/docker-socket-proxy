@@ -7,7 +7,11 @@ frontend ex_apps
 
     stick-table type ip size 100k expire 144m store gpc0,http_req_rate(5m)
 
-    # Perform Basic Auth
+    # Allow unauthenticated access to /heartbeat endpoint
+    acl heartbeat_path path_beg /heartbeat
+    http-request allow if heartbeat_path
+
+    # Perform Basic Auth for all other requests
     acl valid_credentials http_auth(app_api_credentials)
 
     # Increase counter on failed authentication
