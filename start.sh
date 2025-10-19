@@ -38,7 +38,8 @@ if [ ! -f "/haproxy.cfg" ]; then
 
   if [ -f "/certs/cert.pem" ]; then
     EX_APPS_COUNT_PADDED=$(printf "%03d" "$EX_APPS_COUNT")
-    sed -i "s|BIND_ADDRESS_PLACEHOLDER|bind $BIND_ADDRESS:$HAPROXY_PORT v4v6 ssl crt /certs/cert.pem|" /haproxy.cfg
+    # Docker API on HTTP, ExApp proxy on HTTPS
+    sed -i "s|BIND_ADDRESS_PLACEHOLDER|bind $BIND_ADDRESS:$HAPROXY_PORT v4v6|" /haproxy.cfg
     sed -i "s|BIND_ADDRESS_PLACEHOLDER|bind $BIND_ADDRESS:23000-23$EX_APPS_COUNT_PADDED v4v6 ssl crt /certs/cert.pem|" /haproxy_ex_apps.cfg
     sed -i "s|EX_APPS_NET_PLACEHOLDER|$EX_APPS_NET|" /haproxy_ex_apps.cfg
     # Chmod certs to be accessible by haproxy
