@@ -73,3 +73,4 @@ fi
 
 echo "HaProxy quit unexpectedly"
 exit 1
+# Cache bust v2
